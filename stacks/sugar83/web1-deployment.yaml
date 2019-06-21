@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f php71.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web1
+  name: web1
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web1
+    spec:
+      containers:
+      - env:
+        - name: APACHE_RUN_GROUP
+          value: sugar
+        - name: APACHE_RUN_USER
+          value: sugar
+        image: esimonetti/sugardockerized:php7.1-apache-1.16
+        name: sugar-web1
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/www/html
+          name: web1-claim0
+      restartPolicy: Always
+      volumes:
+      - name: web1-claim0
+        persistentVolumeClaim:
+          claimName: web1-claim0
+status: {}

@@ -22,6 +22,8 @@ services:
             - mysql
             - elasticsearch
             - redis
+        labels:
+            kompose.service.type: LoadBalancer
     cron:
         container_name: "sugar-cron"
         image: esimonetti/sugardockerized:php7.1-cron-1.16
