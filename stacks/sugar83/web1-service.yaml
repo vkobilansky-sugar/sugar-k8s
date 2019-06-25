@@ -1,18 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.version: 1.18.0 ()
+  name: web1-service
   labels:
-    io.kompose.service: web1
-    kompose.service.type: LoadBalancer
-  name: web1
+    run: web1-service
 spec:
+  type: LoadBalancer
   ports:
-  - name: "80"
-    port: 80
-    targetPort: 80
+  - port: 80
+    protocol: TCP
   selector:
-    io.kompose.service: web1
-status:
-  loadBalancer: {}
+    app: web1

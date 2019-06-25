@@ -1,33 +1,30 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f php71.yml
-    kompose.version: 1.18.0 ()
-  creationTimestamp: null
+  name: redis-master
   labels:
-    io.kompose.service: redis
-  name: redis
+    app: redis
 spec:
+  selector:
+    matchLabels:
+      app: redis
+      role: master
+      tier: backend
   replicas: 1
-  strategy:
-    type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: redis
+        app: redis
+        role: master
+        tier: backend
     spec:
       containers:
-      - image: redis:latest
-        name: sugar-redis
-        resources: {}
-        volumeMounts:
-        - mountPath: /data
-          name: redis-claim0
-      restartPolicy: Always
-      volumes:
-      - name: redis-claim0
-        persistentVolumeClaim:
-          claimName: redis-claim0
-status: {}
+      - name: master
+        image: k8s.gcr.io/redis:e2e  
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 6379
+

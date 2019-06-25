@@ -1,42 +1,27 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f php71.yml
-    kompose.version: 1.18.0 ()
-  creationTimestamp: null
-  labels:
-    io.kompose.service: mysql
   name: mysql
+  labels:
+    app: mysql
 spec:
-  replicas: 1
-  strategy:
-    type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: mysql
+        app: mysql
     spec:
       containers:
-      - env:
-        - name: MYSQL_PASSWORD
-          value: sugar
+      - name: mysql
+        image: mysql:5.7
+        env:
         - name: MYSQL_ROOT_PASSWORD
           value: root
-        - name: MYSQL_USER
+        - name: MYSQL_DATABASE
           value: sugar
-        image: esimonetti/sugardockerized:mysql5.7-1.06
-        name: sugar-mysql
+        - name: MYSQL_USER
+          value: root
+        - name: MYSQL_PASSWORD
+          value: password
+        args: ["--default-authentication-plugin=mysql_native_password"]
         ports:
         - containerPort: 3306
-        resources: {}
-        volumeMounts:
-        - mountPath: /var/lib/mysql
-          name: mysql-claim0
-      restartPolicy: Always
-      volumes:
-      - name: mysql-claim0
-        persistentVolumeClaim:
-          claimName: mysql-claim0
-status: {}
