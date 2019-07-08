@@ -1,13 +1,9 @@
-# Sugar Dockerized [![Build Status](https://travis-ci.org/esimonetti/SugarDockerized.svg?branch=master)](https://travis-ci.org/esimonetti/SugarDockerized) ![Docker Pulls](https://img.shields.io/docker/pulls/esimonetti/sugardockerized.svg)
-This repository will help you deploy a Docker based development full stack for Sugar, meeting all the platform requirements for a different set of platform combinations.
+# Sugar Kubernetes 
+This repository will help you deploy a Kubernetes based local enviornment. We'll be using `minikube` to simulate a Kubernetes cluser on local.
 
-## Stacks available
-There are few stacks available, with in itself multiple platform combinations. You can read more about the specific stacks on the links below:
-* [Sugar 9](stacks/sugar9/README.md)
-* [Sugar 83](stacks/sugar83/README.md) - For local development to apply to Sugar Cloud only versions
-* [Sugar 8](stacks/sugar8/README.md)
-
-You will find additional stacks within the [stack directory of the project](stacks).
+# Getting started
+Start `minikube`:
+`minikube start --memory 8192`
 
 ### Types of stacks
 There are mainly two types of stack:
