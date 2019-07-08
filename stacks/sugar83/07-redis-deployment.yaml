@@ -1,25 +1,23 @@
 apiVersion: apps/v1 
 kind: Deployment
 metadata:
-  name: redis-master
+  name: sugar-redis
   labels:
-    app: redis
+    app: sugar-redis
 spec:
   selector:
     matchLabels:
-      app: redis
-      role: master
+      app: sugar-redis
       tier: backend
   replicas: 1
   template:
     metadata:
       labels:
-        app: redis
-        role: master
+        app: sugar-redis
         tier: backend
     spec:
       containers:
-      - name: master
+      - name: sugar-redis
         image: k8s.gcr.io/redis:e2e  
         resources:
           requests:

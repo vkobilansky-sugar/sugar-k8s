@@ -24,7 +24,7 @@ spec:
           - containerPort: 80
           volumeMounts:
           - name: hostvol
-            mountPath: /var/www/html/
+            mountPath: /var/www/html/sugar
       volumes:
         - name: hostvol
           hostPath:
