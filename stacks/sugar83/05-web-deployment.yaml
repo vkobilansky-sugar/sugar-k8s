@@ -1,25 +1,25 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: web1
+  name: web
   labels:
-    app: web1
+    app: web
 spec:
-  replicas: 3
+  replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: web1
+      app: web
   template:
     metadata:
       labels:
-        app: web1
+        app: web
     spec:
       containers:
         - name: php-apache
           image: esimonetti/sugardockerized:php7.1-apache-1.16
-          name: sugar-web1
+          name: sugar-web
           ports:
           - containerPort: 80
           volumeMounts:

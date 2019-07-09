@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: web1-service
+  name: web-service
   labels:
-    run: web1-service
+    run: web-service
 spec:
   type: LoadBalancer
   ports:
   - port: 80
     protocol: TCP
   selector:
-    app: web1
+    app: web
