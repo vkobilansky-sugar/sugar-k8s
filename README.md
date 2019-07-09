@@ -40,5 +40,5 @@ Note that `web-service` is exposed via a local IP. This allows you to access you
 
 # Installing SugarCRM 
 * Download desired version of SugarCRM form Honeycomb
-* Extract application files into `data/app/sugar` so that `index.php` and all relevant directories and sugar fiels are in the root of the `sugar` dirrectory. 
+* Extract application files into `data/app/sugar` so that `index.php` and all relevant directories and sugar files are in the root of the `sugar` dirrectory. 
 * Once you open the browser to the stack's IP (as described above), you should see the familiar SugarCRM installation wizard prompt. 
