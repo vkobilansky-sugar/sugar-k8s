@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: mysql-service
+  name: sugar-mysql
 spec:
   selector:
-    app: mysql
+    app: sugar-mysql
   ports:
-    - name: mysql
+    - name: sugar-mysql
       protocol: TCP
       port: 3306
       targetPort: 3306

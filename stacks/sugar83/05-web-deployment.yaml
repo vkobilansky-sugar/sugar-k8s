@@ -17,13 +17,12 @@ spec:
         app: web
     spec:
       containers:
-        - image: esimonetti/sugardockerized:php7.1-apache-1.16
+        # Currently using bitbucket to deploy images
+        # Merged the web container with the permissions one to avoid creating unnecessary volumes
+        - image: gcr.io/sv-courses-243217/bitbucket.org/alexandru_cicioc/sugar83:latest
           name: sugar-web
           ports:
             - containerPort: 80
-          volumeMounts:
-            - name: sugarvol
-              mountPath: /var/www/html
           env:
             - name: APACHE_RUN_USER
               value: "sugar"
@@ -38,3 +37,4 @@ spec:
         - name: sugarvol
           hostPath:
             path: /Users/vkobilanksy/jx-sugar-docker/data/app/sugar
+

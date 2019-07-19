@@ -30,10 +30,11 @@ spec:
         - containerPort: 9200
           name: http
           protocol: TCP
-        resources:
-          limits:
-            cpu: 500m
-            memory: 2Gi
-          requests:
-            cpu: 500m
-            memory: 2Gi 
+# This prevented the container to start due to low resources
+#        resources:
+#          limits:
+#            cpu: 500m
+#            memory: 2Gi
+#          requests:
+#            cpu: 500m
+#            memory: 2Gi
