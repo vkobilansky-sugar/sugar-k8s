@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
   labels:
-    app: mysql
+    app: sugar-mysql
 spec:
   accessModes:
     - ReadWriteOnce

@@ -1,33 +1,39 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: sugar-mysql
   labels:
-    app: mysql
+    app: sugar-mysql
 spec:
+  selector:
+    matchLabels:
+      app: sugar-mysql
+      tier: database
   template:
     metadata:
       labels:
-        app: mysql
+        app: sugar-mysql
+        tier: database
     spec:
       containers:
-      - name: mysql
+      - name: sugar-mysql
         image: mysql:5.7
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: root
         - name: MYSQL_DATABASE
-          value: sugar
+          value: sugarcrm
         - name: MYSQL_USER
-          value: root
+          value: devuser
         - name: MYSQL_PASSWORD
-          value: password
-        args: ["--default-authentication-plugin=mysql_native_password"]
+          value: devpass
+        # mysql can't start unless the volume is empty, ext4 has some default folders
+        args: ["--ignore-db-dir=lost+found"]
         ports:
         - containerPort: 3306
+          name: sugar-mysql
         volumeMounts:
         - mountPath: /var/lib/mysql
-          subPath: data
           name: database
       volumes:
       - name: database
