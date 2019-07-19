@@ -28,3 +28,13 @@ spec:
               value: "sugar"
             - name: APACHE_RUN_GROUP
               value: "sugar"
+        - name: permissions
+          image: esimonetti/sugardockerized:permissions-1.17
+          volumeMounts:
+            - name: sugarvol
+              mountPath: /var/www/html
+      volumes:
+        - name: sugarvol
+          hostPath:
+            path: /Users/vkobilanksy/jx-sugar-docker/data/app/sugar
+
