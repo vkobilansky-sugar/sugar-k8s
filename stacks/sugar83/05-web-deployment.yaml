@@ -5,7 +5,7 @@ metadata:
   labels:
     app: web
 spec:
-  replicas: 1
+  replicas: 3
   strategy:
     type: Recreate
   selector:
@@ -19,7 +19,7 @@ spec:
       containers:
         # Currently using bitbucket to deploy images
         # Merged the web container with the permissions one to avoid creating unnecessary volumes
-        - image: gcr.io/sv-courses-243217/bitbucket.org/alexandru_cicioc/sugar83:latest
+        - image: gcr.io/sv-courses-243217/bitbucket_alexandru_cicioc_sugar83:6848668
           name: sugar-web
           ports:
             - containerPort: 80
@@ -28,13 +28,10 @@ spec:
               value: "sugar"
             - name: APACHE_RUN_GROUP
               value: "sugar"
-        - name: permissions
-          image: esimonetti/sugardockerized:permissions-1.17
           volumeMounts:
-            - name: sugarvol
-              mountPath: /var/www/html
+            - mountPath: /var/www/html/sugar/cache
+              name: web-cache
       volumes:
-        - name: sugarvol
-          hostPath:
-            path: /Users/vkobilanksy/jx-sugar-docker/data/app/sugar
-
+        - name: web-cache
+          persistentVolumeClaim:
+            claimName: web-cache-pv-claim
