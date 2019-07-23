@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: web-cache-pv-claim
+  name: nfs-pv-provisioning
   labels:
-    app: web
+    app: demo
 spec:
   accessModes:
     - ReadWriteOnce # This limits the number of containers can mount the PV

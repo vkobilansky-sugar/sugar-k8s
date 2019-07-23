@@ -19,7 +19,7 @@ spec:
       containers:
         # Currently using bitbucket to deploy images
         # Merged the web container with the permissions one to avoid creating unnecessary volumes
-        - image: gcr.io/sv-courses-243217/bitbucket_alexandru_cicioc_sugar83:6848668
+        - image: gcr.io/sv-courses-243217/bitbucket.org/alexandru_cicioc/sugar83:438b586
           name: sugar-web
           ports:
             - containerPort: 80
@@ -30,8 +30,14 @@ spec:
               value: "sugar"
           volumeMounts:
             - mountPath: /var/www/html/sugar/cache
-              name: web-cache
+              name: nfs
+              subPath: cache
+            - mountPath: /var/www/html/sugar/upload
+              name: nfs
+              subPath: upload
       volumes:
-        - name: web-cache
-          persistentVolumeClaim:
-            claimName: web-cache-pv-claim
+        - name: nfs
+          nfs:
+            # TODO figure out how to connect using a host, nfs-server doesn't work
+            server: 10.12.0.31
+            path: /
