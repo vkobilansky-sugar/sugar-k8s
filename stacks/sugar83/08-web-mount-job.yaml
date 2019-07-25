@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sugar-mount
+spec:
+  template:
+    metadata:
+      name: sugar-mount
+    spec:
+      containers:
+        - image: gcr.io/sv-courses-243217/bitbucket.org/alexandru_cicioc/sugar83:dfeee1e
+          name: sugar-mount
+          volumeMounts:
+            - mountPath: /sugar_mount
+              name: nfs
+              subPath: sugar22
+          # Need to have this here because it needs to mount the volume first
+          command: ["cp", "-rpa", "/sugar/.", "/sugar_mount"]
+      restartPolicy: Never
+      volumes:
+        - name: nfs
+          nfs:
+            # TODO figure out how to connect using a host, nfs-server doesn't work
+            server: 10.12.0.90
+            path: /
