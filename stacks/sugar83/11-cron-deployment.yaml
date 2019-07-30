@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sugar-cron
+  labels:
+    app: sugar-cron
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: sugar-cron
+  template:
+    metadata:
+      labels:
+        app: sugar-cron
+    spec:
+      containers:
+        - image: gcr.io/sv-courses-243217/bitbucket.org/alexandru_cicioc/sugar-cron:8d14657
+          name: sugar-cron
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: nfs
+              subPath: sugar_new
+      volumes:
+        - name: nfs
+          nfs:
+            # TODO figure out how to connect using a host, nfs-server doesn't work
+            server: 10.12.0.90
+            path: /

@@ -1,34 +1,70 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: web
+  name: sugar-web
   labels:
-    app: web
+    app: sugar-web
 spec:
   replicas: 3
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: web
+      app: sugar-web
   template:
     metadata:
       labels:
-        app: web
+        app: sugar-web
     spec:
       containers:
         # Currently using bitbucket to deploy images
-        - image: gcr.io/sv-courses-243217/bitbucket.org/alexandru_cicioc/sugar-server:5e40d03
+        - image: gcr.io/sv-courses-243217/bitbucket.org/alexandru_cicioc/sugar-server:d5305c6
           name: sugar-web
           ports:
             - containerPort: 80
           volumeMounts:
             - mountPath: /var/www/html
               name: nfs
-              subPath: sugar22
+              subPath: sugar_new
+            - mountPath: /var/www/html
+              name: ceph-volume
+              subPath: sugar_new
+          env:
+            - name: APACHE_RUN_USER
+              value: "sugar"
+            - name: APACHE_RUN_GROUP
+              value: "sugar"
+            - name: REDIS_CONNECTION
+              value: "tcp://sugar-redis:6379"
+            - name: DB_TYPE
+              value: "mysql"
+            - name: DB_MANAGER
+              value: "MysqliManager"
+            - name: MYSQL_HOST
+              value: "sugar-mysql"
+            - name: MYSQL_USER
+              value: "devuser"
+            - name: MYSQL_PASSWORD
+              value: "devpass"
+            - name: MYSQL_DATABASE
+              value: "sugarcrm"
+            - name: ELASTIC_SEARCH_HOST
+              value: "sugar-elastic"
+            - name: ELASTIC_SEARCH_PORT
+              value: "9200"
       volumes:
         - name: nfs
           nfs:
             # TODO figure out how to connect using a host, nfs-server doesn't work
             server: 10.12.0.90
             path: /
+        - name: ceph-volume
+          flexVolume:
+            driver: ceph.rook.io/rook
+            fsType: ceph
+            options:
+              fsName: ceph-volume # name of the filesystem specified in the filesystem CRD.
+              clusterNamespace: rook-ceph # namespace where the Rook cluster is deployed
+              # by default the path is /, but you can override and mount a specific path of the filesystem by using the path attribute
+              # the path must exist on the filesystem, otherwise mounting the filesystem at that path will fail
+              # path: /some/path/inside/cephfs

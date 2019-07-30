@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: elasticsearch
+  name: sugar-elastic
   labels:
-    service: elasticsearch
+    service: sugar-elastic
 spec:
   type: NodePort
   selector:
-    component: elasticsearch
+    component: sugar-elastic
   ports:
   - port: 9200
     targetPort: 9200
