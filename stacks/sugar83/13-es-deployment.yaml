@@ -1,15 +1,15 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: elasticsearch
+  name: sugar-elastic
 spec:
   selector:
     matchLabels:
-      component: elasticsearch
+      component: sugar-elastic
   template:
     metadata:
       labels:
-        component: elasticsearch
+        component: sugar-elastic
     spec:
       initContainers:
       - name: set-vm-max-map-count
