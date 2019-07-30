@@ -26,6 +26,9 @@ spec:
             - mountPath: /var/www/html
               name: nfs
               subPath: sugar_new
+            - mountPath: /var/www/html
+              name: ceph-volume
+              subPath: sugar_new
           env:
             - name: APACHE_RUN_USER
               value: "sugar"
@@ -55,3 +58,13 @@ spec:
             # TODO figure out how to connect using a host, nfs-server doesn't work
             server: 10.12.0.90
             path: /
+        - name: ceph-volume
+          flexVolume:
+            driver: ceph.rook.io/rook
+            fsType: ceph
+            options:
+              fsName: ceph-volume # name of the filesystem specified in the filesystem CRD.
+              clusterNamespace: rook-ceph # namespace where the Rook cluster is deployed
+              # by default the path is /, but you can override and mount a specific path of the filesystem by using the path attribute
+              # the path must exist on the filesystem, otherwise mounting the filesystem at that path will fail
+              # path: /some/path/inside/cephfs
